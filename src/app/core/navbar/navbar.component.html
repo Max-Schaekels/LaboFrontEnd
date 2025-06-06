@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <div class="navbar__logo">
+    <a routerLink="/">Boutique</a>
+  </div>
+
+  <ul class="navbar__links">
+    <li><button routerLink="/products">Catalogue</button></li>
+
+    @if (!isConnected) {
+      <li><button routerLink="/auth/login">Connexion</button></li>
+      <li><button routerLink="/auth/register">Inscription</button></li>
+    }
+
+    @if (isConnected) {
+      <li><button routerLink="/account">Mon profil</button></li>
+      <li><button routerLink="/cart">Mon panier</button></li>
+      <li><button (click)="logout()">Déconnexion</button></li>
+    }
+
+    @if (isAdmin) {
+      <li><button routerLink="/admin/products">Admin Produits</button></li>
+      <li><button routerLink="/admin/commandes">Admin Commandes</button></li>
+    }
+  </ul>
+</nav>

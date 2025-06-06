@@ -1,0 +1,15 @@
+<h1>Bienvenue sur notre boutique</h1>
+<p>Découvrez nos produits et passez commande en quelques clics.</p>
+
+<section class="product-preview">
+  <h2>Nos nouveautés</h2>
+  <div class="product-grid">
+    <!-- Boucle sur 3-4 produits mockés ou API plus tard -->
+    <div class="product-card" *ngFor="let product of produits">
+      <img [src]="product.imageUrl" alt="Produit">
+      <h3>{{ product.nom }}</h3>
+      <p>{{ product.prix | currency:'EUR' }}</p>
+    </div>
+  </div>
+  <a routerLink="/products" class="see-more">Voir tout le catalogue</a>
+</section>

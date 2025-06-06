@@ -1,0 +1,72 @@
+<section class="container">
+    <h1>Inscription : </h1>
+    <br>
+    <form [formGroup]="registerForm" class="register-form">
+        <div class="form-group">
+            <label for="prenom">Prénom : </label>
+            <input formControlName="prenom" id="prenom" type="text">
+            @if (registerForm.get('prenom')?.touched && registerForm.get('prenom')?.errors?.['required']) {
+            <span class="error-msg">Ce champs est requis</span>
+            }
+            @if (registerForm.get('prenom')?.errors?.['maxlength']) {
+            <span class="error-msg">Max 55 caractères</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="nom">Nom : </label>
+            <input formControlName="nom" id="nom" type="text">
+            @if (registerForm.get('nom')?.touched && registerForm.get('nom')?.errors?.['required']) {
+            <span class="error-msg">Ce champs est requis</span>
+            }
+            @if (registerForm.get('nom')?.errors?.['maxlength']) {
+            <span class="error-msg">Max 55 caractères</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input formControlName="email" id="email" type="email">
+            @if(registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']) {
+            <span class="error-msg">Ce champs est requis</span>
+            }
+            @if(registerForm.get('email')?.errors?.['email']) {
+            <span class="error-msg">Mauvais format de mail</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="mdp">Mot de passe</label>
+            <input formControlName="mdp" id="mdp" type="password">
+            @if(registerForm.get('mdp')?.touched && registerForm.get('mdp')?.errors?.['required']) {
+            <span class="error-msg">Ce champs est requis</span>
+            }
+            @if(registerForm.get('mdp')?.touched && registerForm.get('mdp')?.errors?.['pattern']) {
+            <span class="error-msg">Votre mot de passe doit contenir au moins 8 caractères dont une minuscule, une
+                majuscule et un chiffre </span>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="confirmpwd">Confirmer le mot de passe</label>
+            <input formControlName="confirm" id="confirmpwd" type="password">
+            @if(registerForm.get('confirm')?.touched && registerForm.get('confirm')?.errors?.['required']) {
+            <span class="error-msg">Ce champs est requis</span>
+            }
+            @if(registerForm.errors?.['checkpassword']){
+            <span class="error-msg">Les mots de passe doivent être identiques</span>
+            }
+        </div>
+        <div>
+            <input formControlName="conditions" id="conditions" type="checkbox">
+            <label for="conditions">Oui, j'accepte toutes les conditions d'utilisation.</label>
+            @if(registerForm.get('conditions')?.touched && registerForm.get('conditions')?.errors?.['required']) {
+            <span class="error-msg">Veuillez accepté les conditions pour vous inscrire sur le site.</span>
+            }
+        </div>
+
+        <div>
+            <button [disabled]="registerForm.invalid" type="submit" class="btn">Envoyer</button>
+
+        </div>
+
+    </form>
+
+</section>

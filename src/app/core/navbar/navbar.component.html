@@ -7,8 +7,8 @@
     <li><button routerLink="/products">Catalogue</button></li>
 
     @if (!isConnected) {
-      <li><button routerLink="/auth/login">Connexion</button></li>
-      <li><button routerLink="/auth/register">Inscription</button></li>
+      <li><button routerLink="login">Connexion</button></li>
+      <li><button routerLink="register">Inscription</button></li>
     }
 
     @if (isConnected) {

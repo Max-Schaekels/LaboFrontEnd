@@ -1,0 +1,111 @@
+$primary-color: #1a2b4c;       // bleu navy
+$error-color: #dc3545;         // rouge clair
+$input-border: #ccc;
+$input-focus: $primary-color;
+
+.login {
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+
+  h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: $primary-color;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: #444;
+      }
+
+      input[type="email"],
+      input[type="password"] {
+        padding: 0.6rem;
+        border: 1px solid $input-border;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.2s;
+
+        &:focus {
+          outline: none;
+          border-color: $input-focus;
+          box-shadow: 0 0 0 2px rgba($input-focus, 0.2);
+        }
+      }
+
+      .error-msg {
+        color: $error-color;
+        font-size: 0.85rem;
+        margin-top: 0.3rem;
+      }
+    }
+
+    .btn {
+      align-self: center;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:disabled {
+        background-color: #999;
+        cursor: not-allowed;
+      }
+
+      &:hover:enabled {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+@media screen and (max-width: 480px) {
+  .login {
+    padding: 1.5rem 1rem;
+    margin: 2rem 1rem;
+  }
+
+  .login-form {
+    gap: 1.2rem;
+
+    .form-group {
+      label {
+        font-size: 0.95rem;
+      }
+
+      input {
+        font-size: 0.95rem;
+        padding: 0.5rem;
+      }
+
+      .error-msg {
+        font-size: 0.75rem;
+      }
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border-radius: 20px;
+    }
+  }
+}

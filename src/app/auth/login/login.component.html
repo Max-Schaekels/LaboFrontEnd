@@ -1,5 +1,5 @@
 <section class="login">
-    <form class="login-form" [formGroup]="loginForm">
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="email">Email</label>
             <input formControlName="email" id="email" type="email">

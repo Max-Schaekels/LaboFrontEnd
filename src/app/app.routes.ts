@@ -7,4 +7,7 @@ export const routes: Routes = [
     {path : '', component : HomeComponent},
     {path : 'register', component : RegisterComponent},
     {path : 'login', component : LoginComponent}
+
+    //exemple de la mise en place du guard à faire à l'avenir 
+    // { path: 'account', component: AccountComponent, canActivate: [authGuard] } (authentification)
 ];

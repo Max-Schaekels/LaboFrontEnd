@@ -1,1 +1,45 @@
-<p>profil works!</p>
+<div class="profil-container" *ngIf="!isEditing; else editTemplate">
+  <h2>Mon profil</h2>
+
+  <div class="profil-info">
+    <p><strong>Prénom :</strong> {{ user?.prenom }}</p>
+    <p><strong>Nom :</strong> {{ user?.nom }}</p>
+    <p><strong>Email :</strong> {{ user?.email }}</p>
+  </div>
+
+  <button (click)="enterEditMode()">Modifier le profil</button>
+</div>
+
+<ng-template #editTemplate>
+  <div class="profil-edit">
+    <h2>Modifier mon profil</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+
+      <label>Prénom</label>
+      <input type="text" formControlName="prenom" placeholder="Votre prénom" />
+      <div *ngIf="editForm.get('prenom')?.invalid && editForm.get('prenom')?.touched" class="error">
+        Prénom invalide
+      </div>
+
+      <label>Nom</label>
+      <input type="text" formControlName="nom" placeholder="Votre nom" />
+      <div *ngIf="editForm.get('nom')?.invalid && editForm.get('nom')?.touched" class="error">
+        Nom invalide
+      </div>
+
+      <label>Nouveau mot de passe (optionnel)</label>
+      <input type="password" formControlName="newMdp" placeholder="********" />
+
+      <label>Confirmer le mot de passe</label>
+      <input type="password" formControlName="confirmNewMdp" placeholder="********" />
+      <div *ngIf="editForm.errors?.['checkpassword'] && editForm.get('confirmNewMdp')?.touched" class="error">
+        Les mots de passe ne correspondent pas.
+      </div>
+
+      <div class="btn-group">
+        <button type="submit" [disabled]="editForm.invalid">Enregistrer</button>
+        <button type="button" class="cancel" (click)="cancelEditMod()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

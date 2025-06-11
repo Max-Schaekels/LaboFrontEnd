@@ -91,10 +91,10 @@ export class AuthService {
     return this.getRole() === 'admin';
   }
 
-  register(form : RegisterFormDTO){
-    return this.http.post(
+  register(form: RegisterFormDTO) {
+    return this.http.post<void>(
       `${this._apiUrl}/Auth/Register`,
-      { form : form },
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) })
+      form,
+      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 }

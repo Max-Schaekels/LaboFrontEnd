@@ -1,7 +1,7 @@
 <section class="container">
     <h1>Inscription : </h1>
     <br>
-    <form [formGroup]="registerForm" class="register-form">
+    <form [formGroup]="registerForm" class="register-form" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="prenom">Prénom : </label>
             <input formControlName="prenom" id="prenom" type="text">
@@ -62,8 +62,14 @@
             }
         </div>
 
+        <div *ngIf="errorMessage" class="error-msg">
+            {{ errorMessage }}
+        </div>
+
         <div>
-            <button [disabled]="registerForm.invalid" type="submit" class="btn">Envoyer</button>
+            <button [disabled]="registerForm.invalid || isSubmitting" type="submit" class="btn">
+                {{ isSubmitting ? 'Envoi...' : 'Envoyer' }}
+            </button>
 
         </div>
 

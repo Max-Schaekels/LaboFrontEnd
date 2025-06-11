@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
-import { BehaviorSubject } from 'rxjs';
 import { RegisterFormDTO } from '../../models/RegisterFormDTO';
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,34 +13,42 @@ export class AuthService {
   private readonly USER_KEY = 'current_user';
   private _apiUrl = 'https://localhost:7248/api';
 
-  private isConnectedSubject = new BehaviorSubject<boolean>(false);
-  isConnected$ = this.isConnectedSubject.asObservable();
+  // ✅ Signals : état réactif
+  private isConnectedSignal = signal<boolean>(this.hasToken());
+  public readonly isConnected = this.isConnectedSignal;
 
-  private isAdminSubject = new BehaviorSubject<boolean>(false);
-  isAdmin$ = this.isAdminSubject.asObservable();
+  private isAdminSignal = signal<boolean>(this.hasAdminRole());
+  public readonly isAdmin = this.isAdminSignal;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, mdp: string) {
-    return this.http.post<{ token: string, user: User; }>(
+    return this.http.post<{ token: string; user: User }>(
       `${this._apiUrl}/Auth/Login`,
-      { email: email, mdp: mdp },
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) }
+      { email, mdp },
+      
+    );
+  }
+
+  register(form: RegisterFormDTO) {
+    return this.http.post<void>(
+      `${this._apiUrl}/Auth/Register`,
+      form
     );
   }
 
   saveAuth(token: string, user: User) {
     localStorage.setItem(this.TOKEN_KEY, token);
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
-    this.isConnectedSubject.next(true);
-    this.isAdminSubject.next(user.role === "admin");
+    this.isConnectedSignal.set(true);
+    this.isAdminSignal.set(user.role === 'admin');
   }
 
   logout() {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.USER_KEY);
-    this.isConnectedSubject.next(false);
-    this.isAdminSubject.next(false);
+    this.isConnectedSignal.set(false);
+    this.isAdminSignal.set(false);
     this.router.navigate(['login']);
   }
 
@@ -57,10 +65,7 @@ export class AuthService {
     return this.getUser()?.role || null;
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();
-  }
-
+  // 🔐 Méthodes internes pour état initial des signals
   private hasToken(): boolean {
     return typeof window !== 'undefined' && !!localStorage.getItem(this.TOKEN_KEY);
   }
@@ -73,28 +78,9 @@ export class AuthService {
 
     try {
       const user = JSON.parse(userJson);
-      return user?.role === "admin";
+      return user?.role === 'admin';
     } catch {
       return false;
     }
-  }
-
-  initAuthState() {
-    const isConnected = this.hasToken();
-    const isAdmin = this.hasAdminRole();
-
-    this.isConnectedSubject.next(isConnected);
-    this.isAdminSubject.next(isAdmin);
-  }
-
-  isAdmin(): boolean {
-    return this.getRole() === 'admin';
-  }
-
-  register(form: RegisterFormDTO) {
-    return this.http.post<void>(
-      `${this._apiUrl}/Auth/Register`,
-      form,
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) });
   }
 }

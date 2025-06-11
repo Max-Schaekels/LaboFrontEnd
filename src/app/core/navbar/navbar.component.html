@@ -6,18 +6,18 @@
   <ul class="navbar__links">
     <li><button routerLink="/products">Catalogue</button></li>
 
-    @if (!isConnected) {
+    @if (!authService.isConnected()) {
       <li><button routerLink="login">Connexion</button></li>
       <li><button routerLink="register">Inscription</button></li>
     }
 
-    @if (isConnected) {
+    @if (authService.isConnected()) {
       <li><button routerLink="/account">Mon profil</button></li>
       <li><button routerLink="/cart">Mon panier</button></li>
       <li><button (click)="logout()">Déconnexion</button></li>
     }
 
-    @if (isAdmin) {
+    @if (authService.isAdmin()) {
       <li><button routerLink="/admin/products">Admin Produits</button></li>
       <li><button routerLink="/admin/commandes">Admin Commandes</button></li>
     }

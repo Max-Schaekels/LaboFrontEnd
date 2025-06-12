@@ -1,0 +1,28 @@
+<div class="product-detail" *ngIf="produit; else loading">
+  <div class="image-container">
+    <img src="assets/images/default-product.jpg" alt="Image produit" />
+  </div>
+
+  <div class="info-container">
+    <h1>{{ produit.nom }}</h1>
+    <p class="category">{{ produit.categorie }}</p>
+
+    <p class="description">
+      {{ produit.description }}
+    </p>
+
+    <div class="prices">
+      <p><strong>Prix HTVA :</strong> {{ produit.prixHTVA | currency:'EUR' }}</p>
+      <p><strong>Prix TVAC :</strong> {{ produit.prixTVAC | currency:'EUR' }}</p>
+    </div>
+
+    <div class="actions">
+      <button class="buy-button">Ajouter au panier</button>
+      <button class="back-button" routerLink="/catalogue">← Retour au catalogue</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p>Chargement du produit...</p>
+</ng-template>

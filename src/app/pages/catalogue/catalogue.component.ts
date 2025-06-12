@@ -4,10 +4,11 @@ import { ProductService } from '../../core/services/product.service';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../../models/product';
 import { FormsModule } from '@angular/forms';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-catalogue',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink, RouterModule],
   templateUrl: './catalogue.component.html',
   styleUrl: './catalogue.component.scss'
 })
@@ -17,6 +18,7 @@ export class CatalogueComponent implements OnInit {
   produits: Product[] = [];
   categories: string[] = [];
   categorieActive: string | null = "";
+  quantites: { [produitId: number]: number; } = {};
 
 
   ngOnInit(): void {
@@ -53,5 +55,14 @@ export class CatalogueComponent implements OnInit {
       }
     });
   }
+
+  ajouterAuPanier(produit: Product, quantite: number) {
+    // À implémenter dans la suite (ajout panier)
+  }
+
+  getQuantiteOptions(stock: number): number[] {
+  const max = Math.min(stock, 20); // Limite visuelle à 20
+  return Array.from({ length: max }, (_, i) => i + 1);
+}
 
 }

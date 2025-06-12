@@ -4,6 +4,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { CatalogueComponent } from './pages/catalogue/catalogue.component';
+import { ProduitDetailComponent } from './pages/produit-detail/produit-detail.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -14,7 +15,8 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./pages/profil/profil.component').then(c => c.ProfilComponent)
     },
-    { path: 'catalogue', component: CatalogueComponent}
+    { path: 'catalogue', component: CatalogueComponent},
+    { path: 'produit/:id', component: ProduitDetailComponent}
 
 
 

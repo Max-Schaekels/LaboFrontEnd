@@ -1,0 +1,28 @@
+<section>
+  <h1>Catalogue :</h1>
+  <div class="categorie-filter">
+  <button (click)="categorieActive = null">Toutes</button>
+  @for (cat of categories; track $index) {
+    <button 
+      (click)="categorieActive = cat; filtrage()"
+      [class.active]="categorieActive === cat"
+    >
+      {{ cat }}
+    </button>
+  }
+</div>
+
+  <div class="catalogue">
+    @for (produit of produits; track produit.id) {
+      <div class="product-card">
+        <img src="assets/images/default-product.jpg" alt="Image produit" />
+        <h3>{{ produit.nom }}</h3>
+        <p>{{ produit.description }}</p>
+        <p><strong>Catégorie</strong> : {{ produit.categorie }}</p>
+        <p><strong>Stock</strong> : {{ produit.quantite }}</p>
+        <p><strong>HTVA</strong> : {{ produit.prixHTVA | currency:'EUR' }}</p>
+        <p><strong>TVAC</strong> : {{ produit.prixTVAC | currency:'EUR' }}</p>
+      </div>
+    }
+  </div>
+</section>

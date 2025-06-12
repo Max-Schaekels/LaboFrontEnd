@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class ProfilComponent implements OnInit {
 
   isEditing: boolean = false;
-  user!: User;
+  user?: User;
   private authService = inject(AuthService);
   private userService = inject(UserService);
   private _fb: FormBuilder = inject(FormBuilder);
@@ -57,6 +57,8 @@ export class ProfilComponent implements OnInit {
     });
   }
   initForm(): void {
+    if (!this.user) return;
+
     this.editForm.patchValue({
       prenom: this.user.prenom,
       nom: this.user.nom,
@@ -75,6 +77,8 @@ export class ProfilComponent implements OnInit {
 
   onSubmit(): void {
     if (this.editForm.invalid) return;
+    if (!this.user) return;
+    const userId = this.user.id;
 
     const dto: UpdateFormDTO = {
       prenom: this.editForm.value.prenom,
@@ -90,15 +94,15 @@ export class ProfilComponent implements OnInit {
 
     console.log('Payload envoyé au backend :', dto);
 
-    this.userService.update(this.user.id, dto).subscribe({
+    this.userService.update(userId, dto).subscribe({
       next: () => {
         if (passwordChanged) {
           this.authService.logout(); // Vide le localStorage et déconnecte
-          this.router.navigate(['login']); 
+          this.router.navigate(['login']);
         } else {
           this.isEditing = false;
           this.editForm.reset();
-          this.loadUser(this.user.id);
+          this.loadUser(userId);
         }
       },
       error: (err) => {

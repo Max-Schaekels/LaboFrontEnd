@@ -6,7 +6,7 @@
   <div class="product-grid">
     <!-- Boucle sur 3-4 produits mockés ou API plus tard -->
     <div class="product-card" *ngFor="let product of produits">
-      <img [src]="product.imageUrl" alt="Produit">
+      <img src="assets/images/default-product.jpg" alt="Produit" />
       <h3>{{ product.nom }}</h3>
       <p>{{ product.prix | currency:'EUR' }}</p>
     </div>

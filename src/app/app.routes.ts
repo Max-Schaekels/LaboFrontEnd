@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LoginComponent } from './auth/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
+import { CatalogueComponent } from './pages/catalogue/catalogue.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -12,8 +13,9 @@ export const routes: Routes = [
         path: 'account',
         canActivate: [authGuard],
         loadComponent: () => import('./pages/profil/profil.component').then(c => c.ProfilComponent)
-    }
+    },
+    { path: 'catalogue', component: CatalogueComponent}
 
-    //exemple de la mise en place du guard à faire à l'avenir 
-    // { path: 'account', component: AccountComponent, canActivate: [authGuard] } (authentification)
+
+
 ];

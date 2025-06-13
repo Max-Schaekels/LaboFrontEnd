@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PanierItem } from '../../models/panierItem';
 import { Product } from '../../models/product';
+import { signal } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,28 +10,36 @@ import { Product } from '../../models/product';
 export class PanierService {
   private items: PanierItem[] = [];
   messageErreurStock: { [produitId: number]: string; } = {};
+  private totalQuantiteSignal = signal<number>(0);
+  readonly totalQuantite = this.totalQuantiteSignal;
+  private authService: AuthService = inject(AuthService);
+  private getPanierKey(): string {
+    const userId = this.authService.getCurrentUser()?.id;
+    return userId ? `panier_${userId}` : 'panier_invite';
+  }
 
   constructor() { this.chargerPanier(); }
 
-  ajouterProduit(produit: Product, quantite: number = 1): void {
-    // Cherche si le produit est déjà présent dans le panier
+  ajouterProduit(produit: Product, quantite: number | string = 1): void {
+    const qty = Number(quantite);
+
     const itemExistant = this.items.find(item => item.produit.id === produit.id);
 
     if (itemExistant) {
-      // S’il existe, on augmente simplement la quantité
-      itemExistant.quantite += quantite;
+      itemExistant.quantite += qty;
     } else {
-      // Sinon on l’ajoute
-      const item: PanierItem = { produit, quantite };
+      const item: PanierItem = { produit, quantite: qty };
       this.items.push(item);
     }
 
     this.sauvegardePanier();
+    this.totalQuantiteSignal.set(this.getTotalQuantite());
   }
 
   supprimerProduitComplet(produitId: number): void {
     this.items = this.items.filter(item => item.produit.id !== produitId);
     this.sauvegardePanier();
+    this.totalQuantiteSignal.set(this.getTotalQuantite());
   }
 
   augmenterQuantiter(produitId: number): void {
@@ -44,6 +54,7 @@ export class PanierService {
       }
     }
     this.sauvegardePanier();
+    this.totalQuantiteSignal.set(this.getTotalQuantite());
   }
 
   diminuerQuantite(produitId: number): void {
@@ -55,22 +66,32 @@ export class PanierService {
       }
     }
     this.sauvegardePanier();
+    this.totalQuantiteSignal.set(this.getTotalQuantite());
   }
 
   sauvegardePanier(): void {
-    localStorage.setItem('panier', JSON.stringify(this.items));
-  }
-
-  chargerPanier(): void {
-    const data = localStorage.getItem('panier');
-    if (data) {
-      this.items = JSON.parse(data);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(this.getPanierKey(), JSON.stringify(this.items));
     }
   }
 
+  chargerPanier(): void {
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem(this.getPanierKey());
+      if (data) {
+        this.items = JSON.parse(data);
+      }
+    }
+    this.totalQuantiteSignal.set(this.getTotalQuantite());
+  }
+
+
   viderPanier(): void {
     this.items = [];
-    localStorage.removeItem('panier');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(this.getPanierKey());
+    }
+    this.totalQuantiteSignal.set(this.getTotalQuantite());
   }
 
   getTotalHTVA(): number {

@@ -6,10 +6,11 @@ import { UpdateFormDTO } from '../../models/updateFormDTO ';
 import { User } from '../../models/user';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HistoriquecommandesComponent } from "./historiquecommandes/historiquecommandes.component";
 
 @Component({
   selector: 'app-profil',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HistoriquecommandesComponent],
   templateUrl: './profil.component.html',
   styleUrl: './profil.component.scss'
 })

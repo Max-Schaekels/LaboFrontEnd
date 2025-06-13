@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../models/user';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { log } from 'console';
 
 @Component({
   selector: 'app-panier',
@@ -85,6 +86,8 @@ export class PanierComponent implements OnInit {
         quantite: item.quantite
       }))
     };
+    console.log(commande);
+    
 
     this.commandeService.createCommande(commande).subscribe({
       next: (result) => {

@@ -1,0 +1,59 @@
+.historique-commandes {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .error, .empty {
+    text-align: center;
+    color: #888;
+    margin-top: 1rem;
+  }
+
+  .commandes-liste {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .commande-card {
+    background-color: white;
+    border: 2px solid #007bff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+
+    p {
+      margin: 0.3rem 0;
+      font-size: 0.95rem;
+    }
+
+    .details-btn {
+      margin-top: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+}

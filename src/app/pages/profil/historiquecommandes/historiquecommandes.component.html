@@ -1,0 +1,23 @@
+<section class="historique-commandes">
+  <h2>📦 Historique de vos commandes</h2>
+
+  <div *ngIf="isLoading">Chargement des commandes...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <div *ngIf="commandes.length === 0 && !isLoading" class="empty">
+    Vous n'avez pas encore passé de commande.
+  </div>
+
+  <div class="commandes-liste" *ngIf="commandes.length > 0">
+    <div class="commande-card" *ngFor="let commande of commandes">
+      <h3>Commande n°{{ commande.id }}</h3>
+      <p><strong>Date :</strong> {{ commande.date | europeanDate }}</p>
+      <p><strong>Statut :</strong> {{ commande.statut }}</p>
+
+      
+      <button class="details-btn" (click)="voirDetails(commande.id)">
+        Voir les détails
+      </button>
+    </div>
+  </div>
+</section>

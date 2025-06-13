@@ -13,7 +13,7 @@
 
     @if (authService.isConnected()) {
       <li><button routerLink="/account">Mon profil</button></li>
-      <li><button routerLink="/panier">🛒Mon panier</button></li>
+      <li><button routerLink="/panier" class="lien-panier">🛒Mon panier <span class="pastille" *ngIf="totalQuantite() > 0">{{ totalQuantite() }}</span></button></li>
       <li><button (click)="logout()">Déconnexion</button></li>
     }
 

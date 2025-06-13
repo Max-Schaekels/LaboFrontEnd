@@ -1,0 +1,58 @@
+<section class="panier-container" *ngIf="items.length > 0; else panierVide">
+
+    <h2>Mon panier</h2>
+
+    <div class="panier-item" *ngFor="let item of items">
+        <div class="item-info">
+            <h4>{{ item.produit.nom }}</h4>
+            <p>{{ item.produit.description }}</p>
+            <p>Prix unitaire : {{ item.produit.prixTVAC | number:'1.2-2' }} € TVAC</p>
+        </div>
+
+        <div class="item-actions">
+            <button (click)="diminuer(item.produit.id)">−</button>
+            <span class="quantite">{{ item.quantite }}</span>
+            <button (click)="augmenter(item.produit.id)">+</button>
+            <button class="supprimer" (click)="supprimer(item.produit.id)">🗑️</button>
+        </div>
+
+        <p *ngIf="messageErreurStock[item.produit.id]" class="message-erreur">
+            {{ messageErreurStock[item.produit.id] }}
+        </p>
+    </div>
+
+    <div class="panier-total">
+        <p>Total HTVA : {{ totalHTVA | number:'1.2-2' }} €</p>
+        <p>Total TVAC : <strong>{{ totalTVAC | number:'1.2-2' }} €</strong></p>
+        <p>Articles : {{ totalQuantite }}</p>
+    </div>
+
+    <div class="actions-globales">
+        <button class="btn-vider" (click)="vider()">🧹 Vider le panier</button>
+    </div>
+
+    <div class="confirmation-bloc">
+        <div *ngIf="!isConnected()" class="message-connexion">
+            ⚠️ Vous devez être connecté pour valider votre commande.
+            <a routerLink="/login">Se connecter</a>
+        </div>
+        <div [class.disabled]="!isConnected()">
+            <h3>Résumé de votre commande :</h3>
+            <ul>
+                <li *ngFor="let item of items">
+                    {{ item.quantite }} × {{ item.produit.nom }} — {{ item.produit.prixTVAC | number:'1.2-2' }} €
+                </li>
+            </ul>
+            <p><strong>Total :</strong> {{ totalTVAC | number:'1.2-2' }} €</p>
+            <p>Souhaitez-vous confirmer cette commande ?</p>
+            <button class="btn-commander" [disabled]="!isConnected()" (click)="passerCommande()">
+                ✅ Oui, confirmer
+            </button>
+        </div>
+    </div>
+
+</section>
+
+<ng-template #panierVide>
+    <p class="panier-vide">Votre panier est vide.</p>
+</ng-template>

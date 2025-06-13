@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Product } from '../../models/product';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
+import { PanierService } from '../../core/services/panier.service';
 
 @Component({
   selector: 'app-catalogue',
@@ -15,6 +16,7 @@ import { RouterLink, RouterModule } from '@angular/router';
 export class CatalogueComponent implements OnInit {
   private _productService = inject(ProductService);
   private _http = inject(HttpClient);
+  private _panierService = inject(PanierService);
   produits: Product[] = [];
   categories: string[] = [];
   categorieActive: string | null = "";
@@ -57,7 +59,7 @@ export class CatalogueComponent implements OnInit {
   }
 
   ajouterAuPanier(produit: Product, quantite: number) {
-    // À implémenter dans la suite (ajout panier)
+    this._panierService.ajouterProduit(produit, quantite);
   }
 
   getQuantiteOptions(stock: number): number[] {

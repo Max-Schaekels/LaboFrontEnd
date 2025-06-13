@@ -20,13 +20,13 @@ export class AuthService {
   private isAdminSignal = signal<boolean>(this.hasAdminRole());
   public readonly isAdmin = this.isAdminSignal;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(email: string, mdp: string) {
-    return this.http.post<{ token: string; user: User }>(
+    return this.http.post<{ token: string; user: User; }>(
       `${this._apiUrl}/Auth/Login`,
       { email, mdp },
-      
+
     );
   }
 
@@ -82,5 +82,12 @@ export class AuthService {
     } catch {
       return false;
     }
+  }
+  getCurrentUser(): User | null {
+    const userJson = localStorage.getItem(this.USER_KEY);
+    if (userJson) {
+      return JSON.parse(userJson);
+    }
+    return null;
   }
 }

@@ -1,1 +1,40 @@
-<p>commande-detail works!</p>
+<section class="commande-detail">
+    <h2>Détails de la commande n°{{ commandeId }}</h2>
+
+    <div *ngIf="isLoading">Chargement...</div>
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+
+    <div *ngIf="details.length > 0">
+        <div class="commande-info" *ngIf="resume">
+            <p><strong>Date :</strong> {{ resume.date | europeanDate }}</p>
+            <p><strong>Statut :</strong> {{ resume.statut }}</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Catégorie</th>
+                    <th>Prix HTVA</th>
+                    <th>Prix TVAC</th>
+                    <th>Quantité</th>
+                    <th>Total ligne TVAC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ligne of details">
+                    <td>{{ ligne.nom }}</td>
+                    <td>{{ ligne.categorie }}</td>
+                    <td>{{ ligne.prixHTVA }} €</td>
+                    <td>{{ ligne.prixTVAC }} €</td>
+                    <td>{{ ligne.QuantiteCommandee }}</td>
+                    <td>{{ (ligne.prixTVAC * ligne.QuantiteCommandee) | number:'1.2-2' }} €</td>
+                </tr>
+            </tbody>
+        </table>
+
+    
+
+        <button class="btn-retour" (click)="retourProfil()">⬅ Retour au profil</button>
+    </div>
+</section>

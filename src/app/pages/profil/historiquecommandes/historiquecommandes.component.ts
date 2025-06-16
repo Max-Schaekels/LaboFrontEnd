@@ -4,6 +4,7 @@ import { CommandeService } from '../../../core/services/commande.service';
 import { CommandeDTO } from '../../../models/CommandeDTO';
 import { CommonModule } from '@angular/common';
 import { EuropeanDatePipe } from '../../../shared/pipes/european-date.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-historiquecommandes',
@@ -14,6 +15,7 @@ import { EuropeanDatePipe } from '../../../shared/pipes/european-date.pipe';
 export class HistoriquecommandesComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private commandeService: CommandeService = inject(CommandeService);
+  private router: Router = inject(Router);
   commandes: CommandeDTO[] = [];
 
   isLoading = true;
@@ -37,7 +39,7 @@ export class HistoriquecommandesComponent implements OnInit {
     }
   }
 
-  voirDetails(id : number){
-
+  voirDetails(id: number) {
+    this.router.navigate(['/commande', id]);
   }
 }

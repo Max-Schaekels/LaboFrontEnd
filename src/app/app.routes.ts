@@ -16,9 +16,15 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./pages/profil/profil.component').then(c => c.ProfilComponent)
     },
-    { path: 'catalogue', component: CatalogueComponent},
-    { path: 'produit/:id', component: ProduitDetailComponent},
-    { path: 'panier', component: PanierComponent}
+    { path: 'catalogue', component: CatalogueComponent },
+    { path: 'produit/:id', component: ProduitDetailComponent },
+    { path: 'panier', component: PanierComponent },
+    {
+        path: 'commande/:id',
+        canActivate: [authGuard], 
+        loadComponent: () => import('./pages/commande-detail/commande-detail.component').then(m => m.CommandeDetailComponent)
+        
+    }
 
 
 

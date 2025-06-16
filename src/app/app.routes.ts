@@ -7,6 +7,7 @@ import { CatalogueComponent } from './pages/catalogue/catalogue.component';
 import { ProduitDetailComponent } from './pages/produit-detail/produit-detail.component';
 import { PanierComponent } from './pages/panier/panier.component';
 import { adminGuard } from './core/guards/admin.guard';
+import { AdminCommandesComponent } from './pages/admin/admin-commandes/admin-commandes.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -28,7 +29,7 @@ export const routes: Routes = [
     },
     {
         path: 'admin/produits',
-        canActivate: [adminGuard], 
+        canActivate: [adminGuard],
         children: [
             {
                 path: '',
@@ -46,6 +47,11 @@ export const routes: Routes = [
                     import('./pages/admin/admin-produits/product-edit/product-edit.component').then(m => m.ProductEditComponent),
             }
         ]
+    },
+    {
+        path: 'admin/commandes',
+        component: AdminCommandesComponent,
+        canActivate: [authGuard]
     }
 
 

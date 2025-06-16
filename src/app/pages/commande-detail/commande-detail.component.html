@@ -27,8 +27,8 @@
                     <td>{{ ligne.categorie }}</td>
                     <td>{{ ligne.prixHTVA }} €</td>
                     <td>{{ ligne.prixTVAC }} €</td>
-                    <td>{{ ligne.QuantiteCommandee }}</td>
-                    <td>{{ (ligne.prixTVAC * ligne.QuantiteCommandee) | number:'1.2-2' }} €</td>
+                    <td>{{ ligne.quantite }}</td>
+                    <td>{{ (ligne.prixTVAC * ligne.quantite) | number:'1.2-2' }} €</td>
                 </tr>
             </tbody>
         </table>

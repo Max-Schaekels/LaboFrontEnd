@@ -81,3 +81,34 @@
     margin-top: 1rem;
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+
+  button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &.active {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled):not(.active) {
+      background-color: #e0e0e0;
+    }
+  }
+}

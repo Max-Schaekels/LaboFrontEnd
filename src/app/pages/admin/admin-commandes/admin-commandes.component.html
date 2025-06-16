@@ -1,1 +1,38 @@
-<p>admin-commandes works!</p>
+<section class="admin-commandes">
+  <h1>Gestion des commandes</h1>
+
+  <div *ngIf="isLoading" class="loading">Chargement des commandes...</div>
+  <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+  <table *ngIf="!isLoading && commandes.length > 0" class="commande-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let commande of commandes">
+        <td>{{ commande.id }}</td>
+        <td>{{ commande.date | europeanDate }}</td>
+
+        <td>
+          <span class="badge">{{ commande.statut }}</span>
+        </td>
+        <td>
+          <button class="btn" (click)="changerStatut(commande.id, 'Traité')">Marquer traité</button>
+          <button class="btn" (click)="changerStatut(commande.id, 'Expédié')">Expédié</button>
+          <button class="btn" (click)="changerStatut(commande.id, 'En cours')">En cours de traitement</button>
+          <button class="btn" (click)="changerStatut(commande.id, 'Annulé')">Annuler</button>
+          <button class="btn btn-secondary" (click)="detailsCommande(commande.id)">Détails</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!isLoading && commandes.length === 0" class="empty">
+    Aucune commande trouvée.
+  </div>
+</section>

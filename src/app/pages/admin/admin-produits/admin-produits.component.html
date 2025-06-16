@@ -1,1 +1,33 @@
-<p>admin-produits works!</p>
+<section class="admin-produits">
+  <h2>🛠️ Gestion des produits</h2>
+
+  <button class="ajouter-btn" (click)="ajouterProduit()">➕ Ajouter un produit</button>
+
+  <div *ngIf="produits.length === 0">
+    <p class="info">Aucun produit disponible.</p>
+  </div>
+
+  <table *ngIf="produits.length > 0">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Catégorie</th>
+        <th>Prix HTVA</th>
+        <th>Prix TVAC</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produit of produits">
+        <td>{{ produit.nom }}</td>
+        <td>{{ produit.categorie }}</td>
+        <td>{{ produit.prixHTVA }} €</td>
+        <td>{{ produit.prixTVAC }} €</td>
+        <td>
+          <button class="edit-btn" (click)="editProduit(produit.id)">✏️</button>
+          <button class="delete-btn" (click)="deleteProduit(produit.id)">🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

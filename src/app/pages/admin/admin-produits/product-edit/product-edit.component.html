@@ -1,1 +1,85 @@
-<p>product-edit works!</p>
+<section class="container">
+  <h1>✏️ Modifier un produit</h1>
+  <br />
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="product-form">
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input id="nom" type="text" formControlName="nom" />
+      @if(editForm.get('nom')?.touched && editForm.get('nom')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if(editForm.get('nom')?.errors?.['maxlength']) {
+        <span class="error-msg">Max 150 caractères</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      @if(editForm.get('description')?.touched && editForm.get('description')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if(editForm.get('description')?.errors?.['maxlength']) {
+        <span class="error-msg">Max 1000 caractères</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="categorie">Catégorie</label>
+      <input id="categorie" type="text" formControlName="categorie" />
+      @if(editForm.get('categorie')?.touched && editForm.get('categorie')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if(editForm.get('categorie')?.errors?.['maxlength']) {
+        <span class="error-msg">Max 100 caractères</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="quantite">Quantité</label>
+      <input id="quantite" type="number" formControlName="quantite" />
+      @if(editForm.get('quantite')?.touched && editForm.get('quantite')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if(editForm.get('quantite')?.errors?.['min']) {
+        <span class="error-msg">La quantité ne peut pas être négative</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="prixHTVA">Prix HTVA</label>
+      <input id="prixHTVA" type="number" formControlName="prixHTVA" step="0.01" />
+      @if(editForm.get('prixHTVA')?.touched && editForm.get('prixHTVA')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if(editForm.get('prixHTVA')?.errors?.['min']) {
+        <span class="error-msg">Le prix doit être positif</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="prixTVAC">Prix TVAC</label>
+      <input id="prixTVAC" type="number" formControlName="prixTVAC" step="0.01" />
+      @if(editForm.get('prixTVAC')?.touched && editForm.get('prixTVAC')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if(editForm.get('prixTVAC')?.errors?.['min']) {
+        <span class="error-msg">Le prix doit être positif</span>
+      }
+    </div>
+
+    <div *ngIf="errorMessage" class="error-msg">
+      {{ errorMessage }}
+    </div>
+
+    <div>
+      <button
+        [disabled]="editForm.invalid || isEditing"
+        type="submit"
+        class="btn"
+      >
+        {{ isEditing ? 'Mise à jour...' : 'Mettre à jour le produit' }}
+      </button>
+    </div>
+  </form>
+</section>

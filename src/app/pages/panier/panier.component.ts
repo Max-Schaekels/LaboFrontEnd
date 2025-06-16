@@ -6,7 +6,8 @@ import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../models/user';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { log } from 'console';
+import { ToastService } from '../../core/services/toast.service';
+
 
 @Component({
   selector: 'app-panier',
@@ -20,6 +21,7 @@ export class PanierComponent implements OnInit {
   private commandeService: CommandeService = inject(CommandeService);
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
+  private toastService : ToastService = inject(ToastService);
 
   // Liste des produits du panier
   items: PanierItem[] = [];
@@ -95,7 +97,9 @@ export class PanierComponent implements OnInit {
         this.chargerPanier();
         // Redirection ou confirmation
         
-        this.router.navigate(['/account']); 
+        this.router.navigate(['/account']);
+        this.toastService.showToast('Commande crée avec succès.') 
+
       },
       error: (error) => {
         console.error("Erreur lors de la commande :", error);

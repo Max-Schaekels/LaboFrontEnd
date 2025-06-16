@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ProductService } from '../../../../core/services/product.service';
 import { Router } from '@angular/router';
 import { ProductFormDTO } from '../../../../models/productFormDTO';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-product-create',
@@ -16,6 +17,7 @@ export class ProductCreateComponent {
   private _fb: FormBuilder = inject(FormBuilder);
   private _produitService: ProductService = inject(ProductService);
   private _router: Router = inject(Router);
+  private _toastService : ToastService = inject(ToastService);
   isSubmitting = false;
   errorMessage: string | null = null;
 
@@ -58,6 +60,7 @@ export class ProductCreateComponent {
         this.errorMessage = null;
 
         this._router.navigate(['admin/produits']);
+        this._toastService.showToast('Produit ajouté avec succès !');
       },
       error: (err) => {
         this.isSubmitting = false;

@@ -1,1 +1,83 @@
-<p>product-create works!</p>
+<section class="container">
+  <h1>Ajouter un produit</h1>
+  <br>
+
+  <form [formGroup]="productForm" class="product-form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="nom">Nom :</label>
+      <input id="nom" formControlName="nom" type="text" />
+      @if (productForm.get('nom')?.touched && productForm.get('nom')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if (productForm.get('nom')?.errors?.['maxlength']) {
+        <span class="error-msg">Max 150 caractères</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description :</label>
+      <textarea id="description" formControlName="description"></textarea>
+      @if (productForm.get('description')?.touched && productForm.get('description')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if (productForm.get('description')?.errors?.['maxlength']) {
+        <span class="error-msg">Max 1000 caractères</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="categorie">Catégorie :</label>
+      <input id="categorie" formControlName="categorie" type="text" />
+      @if (productForm.get('categorie')?.touched && productForm.get('categorie')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if (productForm.get('categorie')?.errors?.['maxlength']) {
+        <span class="error-msg">Max 100 caractères</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="quantite">Quantité :</label>
+      <input id="quantite" formControlName="quantite" type="number" />
+      @if (productForm.get('quantite')?.touched && productForm.get('quantite')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if (productForm.get('quantite')?.errors?.['min']) {
+        <span class="error-msg">La quantité ne peut pas être négative</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="prixHTVA">Prix HTVA :</label>
+      <input id="prixHTVA" formControlName="prixHTVA" type="number" step="0.01" />
+      @if (productForm.get('prixHTVA')?.touched && productForm.get('prixHTVA')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if (productForm.get('prixHTVA')?.errors?.['min']) {
+        <span class="error-msg">Le prix ne peut pas être négatif</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="prixTVAC">Prix TVAC :</label>
+      <input id="prixTVAC" formControlName="prixTVAC" type="number" step="0.01" />
+      @if (productForm.get('prixTVAC')?.touched && productForm.get('prixTVAC')?.errors?.['required']) {
+        <span class="error-msg">Ce champ est requis</span>
+      }
+      @if (productForm.get('prixTVAC')?.errors?.['min']) {
+        <span class="error-msg">Le prix ne peut pas être négatif</span>
+      }
+    </div>
+
+    <div *ngIf="errorMessage" class="error-msg">
+      {{ errorMessage }}
+    </div>
+
+    <div>
+      <button [disabled]="productForm.invalid || isSubmitting" type="submit" class="btn">
+        {{ isSubmitting ? 'Ajout en cours...' : 'Ajouter' }}
+      </button>
+    </div>
+  </form>
+</section>

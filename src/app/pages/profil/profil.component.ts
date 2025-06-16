@@ -18,8 +18,8 @@ export class ProfilComponent implements OnInit {
 
   isEditing: boolean = false;
   user?: User;
-  private authService = inject(AuthService);
-  private userService = inject(UserService);
+  private authService : AuthService = inject(AuthService);
+  private userService : UserService = inject(UserService);
   private _fb: FormBuilder = inject(FormBuilder);
   private router: Router = inject(Router);
 

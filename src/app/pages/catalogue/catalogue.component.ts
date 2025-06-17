@@ -14,9 +14,9 @@ import { PanierService } from '../../core/services/panier.service';
   styleUrl: './catalogue.component.scss'
 })
 export class CatalogueComponent implements OnInit {
-  private _productService = inject(ProductService);
+  private _productService : ProductService = inject(ProductService);
   private _http = inject(HttpClient);
-  private _panierService = inject(PanierService);
+  private _panierService : PanierService = inject(PanierService);
   produits: Product[] = [];
   categories: string[] = [];
   categorieActive: string | null = "";

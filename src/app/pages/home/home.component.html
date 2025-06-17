@@ -4,12 +4,16 @@
 <section class="product-preview">
   <h2>Nos nouveautés</h2>
   <div class="product-grid">
-    <!-- Boucle sur 3-4 produits mockés ou API plus tard -->
     <div class="product-card" *ngFor="let product of produits">
-      <img src="assets/images/default-product.jpg" alt="Produit" />
-      <h3>{{ product.nom }}</h3>
-      <p>{{ product.prix | currency:'EUR' }}</p>
+      <a [routerLink]="['/produit', product.id]">
+        <img src="assets/images/default-product.jpg" alt="Image produit" />
+      </a>
+      <h3><a [routerLink]="['/produit', product.id]">
+          {{ product.nom }}
+        </a></h3>
+        <p><strong>Catégorie :</strong> {{ product.categorie }}</p>
+      <p>{{ product.prixTVAC | currency:'EUR' }}</p>
     </div>
   </div>
-  <a routerLink="/products" class="see-more">Voir tout le catalogue</a>
+  <a routerLink="/catalogue" class="see-more">Voir tout le catalogue</a>
 </section>

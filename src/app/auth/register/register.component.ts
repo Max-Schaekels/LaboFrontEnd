@@ -4,10 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { RegisterFormDTO } from '../../models/RegisterFormDTO';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { CaptchaComponent } from '../../shared/components/captcha/captcha.component';
 
 @Component({
   selector: 'app-register',
-  imports: [ ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, CaptchaComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -18,6 +19,7 @@ export class RegisterComponent {
   private routeur = inject(Router);
   isSubmitting = false;
   errorMessage: string | null = null;
+  isCaptchaValid: boolean = false;
 
   registerForm: FormGroup;
 
@@ -57,7 +59,7 @@ export class RegisterComponent {
     this.isSubmitting = true;
     this.errorMessage = null;
 
-    
+
     const dto: RegisterFormDTO = {
       prenom: this.registerForm.value.prenom,
       nom: this.registerForm.value.nom,
@@ -68,23 +70,27 @@ export class RegisterComponent {
 
     this.authService.register(dto).subscribe({
       next: () => {
-        
+
         this.isSubmitting = false;
         this.registerForm.reset();
-        this.errorMessage = null; 
+        this.errorMessage = null;
 
-        
+
         window.alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
         this.routeur.navigate(['login']);
       },
       error: (err) => {
-        
+
         this.isSubmitting = false;
         console.error('Erreur d’inscription :', err);
-       
+
         this.errorMessage = err.error?.message || 'Une erreur est survenue pendant l’inscription.';
       }
     });
+  }
+
+  onCaptchaSuccess(): void {
+    this.isCaptchaValid = true;
   }
 
 }

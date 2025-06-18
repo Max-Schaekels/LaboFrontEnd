@@ -66,8 +66,10 @@
             {{ errorMessage }}
         </div>
 
+        <app-captcha (onSuccess)="onCaptchaSuccess()" />
+
         <div>
-            <button [disabled]="registerForm.invalid || isSubmitting" type="submit" class="btn">
+            <button [disabled]="registerForm.invalid || isSubmitting || !isCaptchaValid" type="submit" class="btn">
                 {{ isSubmitting ? 'Envoi...' : 'Envoyer' }}
             </button>
 
